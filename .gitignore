@@ -1,0 +1,6 @@
+#ignore all compiled classes
+*.class
+#ignore printed results
+output.txt
+#ignore test java classes
+OutputCaller.java
