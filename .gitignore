@@ -2,5 +2,6 @@
 *.class
 #ignore printed results
 output.txt
+ipd_summary.txt
 #ignore test java classes
 OutputCaller.java

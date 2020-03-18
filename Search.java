@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 import java.text.*;
 
+@SuppressWarnings("unchecked")
 public class Search {
 
 /*******************************************************************************
@@ -53,6 +54,11 @@ public class Search {
 	private static double TmemberFitness;
 
 	private static double fitnessStats[][];  // 0=Avg, 1=Best
+	
+	public static ArrayList<List<Graph>> graphRuns;
+	public static ArrayList<Graph> graphGens;
+	public static int genSize;
+	public static int i, j;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -69,6 +75,10 @@ public class Search {
 *******************************************************************************/
 
 	public static void main(String[] args) throws java.io.IOException{
+		
+		graphRuns = new ArrayList<List<Graph>>();
+		graphGens = new ArrayList<Graph>();
+		i = j = 0;
 
 		Calendar dateAndTime = Calendar.getInstance();
 		Date startTime = dateAndTime.getTime();
@@ -209,7 +219,8 @@ public class Search {
 
 				// Output generation statistics to screen
 				System.out.println(R + "\t" + G +  "\t" + (int)bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness);
-
+				graphGens.add(new Graph((int)bestOfGenChromo.rawFitness, averageRawFitness, stdevRawFitness));
+				
 				// Output generation statistics to summary file
 				summaryOutput.write(" R ");
 				Hwrite.right(R, 3, summaryOutput);
@@ -357,7 +368,10 @@ public class Search {
 			problem.doPrintGenes(bestOfRunChromo, summaryOutput);
 
 			System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
-
+			graphRuns.add((ArrayList<Graph>)graphGens.clone());
+			genSize = graphGens.size();
+			graphGens.clear();
+			
 		} //End of a Run
 
 		Hwrite.left("B", 8, summaryOutput);
@@ -378,10 +392,14 @@ public class Search {
 
 		System.out.println();
 		System.out.println("Start:  " + startTime);
+		
+		//initialize output to .txt files
+		Output output = new Output(graphRuns, graphGens, genSize);
+		
 		dateAndTime = Calendar.getInstance();
 		Date endTime = dateAndTime.getTime();
 		System.out.println("End  :  " + endTime);
-
+		
 	} // End of Main Class
 
 }   // End of Search.Java ******************************************************
