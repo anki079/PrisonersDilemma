@@ -22,7 +22,7 @@ public class PrisonersDilemmaGA extends FitnessFunction{
 
       }
 
-      public void doRawFitness(Chromo X)
+      public void doRawFitnessAlt(Chromo X)
       {
 		// Strategies
         s = new GAStrategy(X.chromo);
@@ -55,6 +55,23 @@ public class PrisonersDilemmaGA extends FitnessFunction{
 
       }
 
+	public void doRawFitness(Chromo X)
+	{
+		ArrayList<Strategy> strategies = new ArrayList<Strategy>();
+		Strategy s = new GAStrategy(X.chromo);
+		int fitness = 0;
+		
+		// Create Strategies Based on other individuals in population and play those games
+		for (int i = 0; i < Parameters.popSize; i++)
+		{
+			Strategy currStrategy = new GAStrategy(Search.member[i].chromo);
+			IteratedPD game = new IteratedPD (s, currStrategy);
+			game.runSteps(numRounds);
+			fitness += game.player1Score();
+		}
+
+		X.rawFitness = fitness;
+	}
 
     public void doPrintGenes(Chromo X, FileWriter output) throws java.io.IOException{
 
