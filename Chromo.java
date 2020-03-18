@@ -101,7 +101,7 @@ public class Chromo
 
 	//  Mutate a Chromosome Based on Mutation Type *****************************
 
-	public void doMutation(){
+	public void doMutation(double mu){
 
 		String mutChromo = "";
 		char x;
@@ -113,7 +113,7 @@ public class Chromo
 			for (int j=0; j<(Parameters.geneSize * Parameters.numGenes); j++){
 				x = this.chromo.charAt(j);
 				randnum = Search.r.nextDouble();
-				if (randnum < Parameters.mutationRate){
+				if (randnum < mu){
 					if (x == '1') x = '0';
 					else x = '1';
 				}
