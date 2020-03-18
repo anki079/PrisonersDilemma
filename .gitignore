@@ -3,5 +3,8 @@
 #ignore printed results
 output.txt
 ipd_summary.txt
+ipd.params
 #ignore test java classes
 OutputCaller.java
+ipd_summary.txt
+ipd.params
