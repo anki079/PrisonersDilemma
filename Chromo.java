@@ -155,18 +155,28 @@ public class Chromo
 			return(j);
 
 		case 2:     //  Tournament Selection
-			randnum = Search.r.nextDouble();
-			for(m = 0; m < Parameters.popSize;m++){
-				k = Search.r.nextInt(Parameters.popSize);
-				l = Search.r.nextInt(Parameters.popSize);
-				if(Search.member[k].proFitness>Search.member[l].proFitness){
-					if(randnum < 0.5)
-						return (k);
-					else
-						return (l);
-				}
+			double p = 0.7;
+			double randnum1 = Search.r.nextDouble();
+			double randnum2 = Search.r.nextDouble();
+			double tournamentResult = Search.r.nextDouble();
+
+			j = (int) (randnum1 * Parameters.popSize);
+			k = (int) (randnum2 * Parameters.popSize);
+
+			if (tournamentResult <= p)
+			{
+				if (Search.member[j].rawFitness > Search.member[k].rawFitness)
+					return j;
+				else
+					return k;
 			}
-			break;
+			else
+			{
+				if (Search.member[j].rawFitness < Search.member[k].rawFitness)
+					return j;
+				else
+					return k;
+			}
 
 		case 4: 	//	Rank selection
 			randnum = Search.r.nextDouble();
@@ -202,7 +212,7 @@ public class Chromo
 			break;
 
 		case 2:     //  Two Point Crossover
-			
+
 			// Select 2 random crossover points
 			xoverPoint1 = 1 + (int)(Search.r.nextDouble() * (Parameters.numGenes * Parameters.geneSize-1));
 			xoverPoint2 = 1 + (int)(Search.r.nextDouble() * (Parameters.numGenes * Parameters.geneSize-1));
@@ -243,13 +253,13 @@ public class Chromo
 					//child1.chromo += parent1.chromo.charAt(i);
 					//child2.chromo += parent2.chromo.charAt(i);
 					tempChild1.append(parent1.chromo.charAt(i));
-					tempChild2.append(parent2.chromo.charAt(i));					
+					tempChild2.append(parent2.chromo.charAt(i));
 				}
 			}
 
 			child1.chromo = tempChild1.toString();
 			child2.chromo = tempChild2.toString();
-			
+
 			break;
 
 		default:

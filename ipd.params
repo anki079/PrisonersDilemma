@@ -13,7 +13,7 @@ Mutation Rate (6)            :0.5
 Random Number Seed           :75982
 Number of Genes/Points (7)   :32
 Size of Genes (18)           :1
-Number of Rounds             :5
+Number of Rounds             :100
 
 Notes:
 

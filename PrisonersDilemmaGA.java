@@ -7,30 +7,55 @@ public class PrisonersDilemmaGA extends FitnessFunction{
             We need the following objects but how are they passed to this class?
          */
 
-      IteratedPD ipd;
-      GAStrategy s;
+      Strategy s;
       StrategyAlwaysDefect d;
       StrategyAlwaysCooperate c;
       StrategyRandom rnd;
       StrategyTitForTat tft;
       StrategyTitForTwoTats tf2t;
+	  int numRounds;
 
-      public PrisonersDilemmaGA()
+      public PrisonersDilemmaGA(int numRounds)
       {
         name = "Iterated Prisoner's Dilemma";
+		this.numRounds = numRounds;
 
       }
 
       public void doRawFitness(Chromo X)
       {
-        x.rawFitness = ipd(s(X.chromo),d).player1Score() 
-        + ipd(s(X.chromo),c).player1Score()
-        + ipd(s(X.chromo),rnd).player1Score()
-        + ipd(s(X.chromo),tft).player1Score()
-        + ipd(s(X.chromo),tf2t).player1Score();
+		// Strategies
+        s = new GAStrategy(X.chromo);
+        d = new StrategyAlwaysDefect();
+        c = new StrategyAlwaysCooperate();
+        rnd = new StrategyRandom();
+        tft = new StrategyTitForTat();
+        tf2t = new StrategyTitForTwoTats();
+
+		// Games
+		IteratedPD vsDefect = new IteratedPD(s,d);
+		IteratedPD vsCooperate = new IteratedPD(s,c);
+		IteratedPD vsRandom = new IteratedPD(s,rnd);
+		IteratedPD vsTfT = new IteratedPD(s,tft);
+		IteratedPD vsTf2t = new IteratedPD(s,tf2t);
+
+		// Play Games
+		vsDefect.runSteps(numRounds);
+		vsCooperate.runSteps(numRounds);
+		vsRandom.runSteps(numRounds);
+		vsTfT.runSteps(numRounds);
+		vsTf2t.runSteps(numRounds);
+
+		// Calculate Fitness
+        X.rawFitness = vsDefect.player1Score()
+        + vsCooperate.player1Score()
+        + vsRandom.player1Score()
+        + vsTfT.player1Score()
+        + vsTf2t.player1Score();
+
       }
 
-  
+
     public void doPrintGenes(Chromo X, FileWriter output) throws java.io.IOException{
 
         for (int i=0; i<Parameters.numGenes; i++){
@@ -45,5 +70,5 @@ public class PrisonersDilemmaGA extends FitnessFunction{
         output.write("\n\n");
         return;
     }
-      
+
 }
