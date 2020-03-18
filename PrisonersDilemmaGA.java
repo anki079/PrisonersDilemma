@@ -28,28 +28,28 @@ public class PrisonersDilemmaGA extends FitnessFunction{
         s = new GAStrategy(X.chromo);
         d = new StrategyAlwaysDefect();
         c = new StrategyAlwaysCooperate();
-        rnd = new StrategyRandom();
+        //rnd = new StrategyRandom();
         tft = new StrategyTitForTat();
         tf2t = new StrategyTitForTwoTats();
 
 		// Games
 		IteratedPD vsDefect = new IteratedPD(s,d);
 		IteratedPD vsCooperate = new IteratedPD(s,c);
-		IteratedPD vsRandom = new IteratedPD(s,rnd);
+		//IteratedPD vsRandom = new IteratedPD(s,rnd);
 		IteratedPD vsTfT = new IteratedPD(s,tft);
 		IteratedPD vsTf2t = new IteratedPD(s,tf2t);
 
 		// Play Games
 		vsDefect.runSteps(numRounds);
 		vsCooperate.runSteps(numRounds);
-		vsRandom.runSteps(numRounds);
+		//vsRandom.runSteps(numRounds);
 		vsTfT.runSteps(numRounds);
 		vsTf2t.runSteps(numRounds);
 
 		// Calculate Fitness
         X.rawFitness = vsDefect.player1Score()
         + vsCooperate.player1Score()
-        + vsRandom.player1Score()
+        //+ vsRandom.player1Score()
         + vsTfT.player1Score()
         + vsTf2t.player1Score();
 
