@@ -9,9 +9,9 @@ public class StrategyZacharyAnkitaIan extends Strategy
 	int [] lastFiveMoves = { 1, 1, 1, 1, 1 };
 
 	// Strategy takes in a chromosome and builds a strategy based on that
-	public GAStrategy()
+	public StrategyZacharyAnkitaIan()
 	{
-		name = "GA Strategy";
+		name = "Strategy: Zachary, Ankita, Ian";
 		this.chromosome = "11001010000011000001001000000000";
 	}
 
