@@ -54,12 +54,12 @@ public class Search {
 	private static double TmemberFitness;
 
 	private static double fitnessStats[][];  // 0=Avg, 1=Best
-	
+
 	public static ArrayList<List<Graph>> graphRuns;
 	public static ArrayList<Graph> graphGens;
 	public static int genSize;
 	public static int i, j, k, l;
-	
+
 	public static double xOverRate[];
 	public static double muRate[];
 	public static double bestAddFitness;
@@ -68,7 +68,7 @@ public class Search {
 	public static double bestMuRate;
 	public static int miniGen;
 	public static int miniRun;
-	
+
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -85,16 +85,16 @@ public class Search {
 *******************************************************************************/
 
 	public static void main(String[] args) throws java.io.IOException{
-		
+
 		Calendar dateAndTime = Calendar.getInstance();
 		Date startTime = dateAndTime.getTime();
-		
+
 		xOverRate = new double[] {0,.1,.3,.5,.7,.9};
 		muRate = new double[] {0,.001,.005,.01,.05,.1};
 		bestXoverRate = bestMuRate = bestFitness = bestAddFitness = 0;
-		miniGen = 10;
-		miniRun = 10;
-		
+		miniGen = 50;
+		miniRun = 50;
+
 		graphRuns = new ArrayList<List<Graph>>();
 		graphGens = new ArrayList<Graph>();
 		i = j = k = l = 0;
@@ -116,11 +116,11 @@ public class Search {
 
 	for(k=0;k<xOverRate.length;k++){
 	for(l=0;l<muRate.length;l++){
-		
+
 		System.out.println("Optimizing");
 		System.out.println("Testing Parameters: X: "+xOverRate[k]+" ,Mu: "+muRate[l]+" ");
 		System.out.println("Best so far: X: "+bestXoverRate+" ,Mu: "+bestMuRate+" ");
-		
+
 	//	Set up Fitness Statistics matrix
 		fitnessStats = new double[2][miniGen];
 		for (int i=0; i<miniGen; i++){
@@ -249,7 +249,7 @@ public class Search {
 				// Output generation statistics to screen
 				//System.out.println(R + "\t" + G +  "\t" + (int)bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness);
 				//graphGens.add(new Graph((int)bestOfGenChromo.rawFitness, averageRawFitness, stdevRawFitness));
-				
+
 				// Output generation statistics to summary file
 				//summaryOutput.write(" R ");
 				Hwrite.right(R, 3, summaryOutput);
@@ -398,11 +398,11 @@ public class Search {
 
 			//System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
 			bestAddFitness += bestOfRunChromo.rawFitness;
-			
+
 			//graphRuns.add((ArrayList<Graph>)graphGens.clone());
 			//genSize = graphGens.size();
 			//graphGens.clear();
-			
+
 		} //End of a Run
 
 		//Hwrite.left("B", 8, summaryOutput);
@@ -421,7 +421,7 @@ public class Search {
 		//summaryOutput.write("\n");
 		//summaryOutput.close();
 		bestAddFitness = bestAddFitness / miniRun;
-		
+
 		if(bestAddFitness > bestFitness)
 		{
 			bestFitness = bestAddFitness;
@@ -562,7 +562,7 @@ public class Search {
 				// Output generation statistics to screen
 				System.out.println(R + "\t" + G +  "\t" + (int)bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness);
 				graphGens.add(new Graph((int)bestOfGenChromo.rawFitness, averageRawFitness, stdevRawFitness));
-				
+
 				// Output generation statistics to summary file
 				summaryOutput.write(" R ");
 				Hwrite.right(R, 3, summaryOutput);
@@ -713,7 +713,7 @@ public class Search {
 			graphRuns.add((ArrayList<Graph>)graphGens.clone());
 			genSize = graphGens.size();
 			graphGens.clear();
-			
+
 		} //End of a Run
 
 		Hwrite.left("B", 8, summaryOutput);
@@ -733,18 +733,18 @@ public class Search {
 		summaryOutput.close();
 
 		System.out.println();
-		System.out.println("Using Parameters X: "+bestXoverRate+" Mu: "+bestMuRate);		
+		System.out.println("Using Parameters X: "+bestXoverRate+" Mu: "+bestMuRate);
 
 		System.out.println();
 		System.out.println("Start:  " + startTime);
-		
+
 		//initialize output to .txt files
 		Output output = new Output(graphRuns, graphGens, genSize);
-		
+
 		dateAndTime = Calendar.getInstance();
 		Date endTime = dateAndTime.getTime();
 		System.out.println("End  :  " + endTime);
-		
+
 	} // End of Main Class
 
 }   // End of Search.Java ******************************************************
